@@ -1,0 +1,60 @@
+syntax = "proto3";
+
+import "google/protobuf/any.proto";
+
+package DHT;
+
+option java_package = "com.goodforgoodbusiness.proto";
+option java_outer_classname = "DHTProto";
+
+// publish a pointer
+message PointerPublishRequest {
+	string	pattern		=  1;
+	bytes 	data		=  2;
+}
+
+// single Response indicating if a pointer was published successfully
+message PointerPublishResponse {
+}
+
+// search for a pointer by its pattern
+message PointerSearchRequest {
+	string	pattern		=  1;
+}
+
+// search Response for pointer (MULTIPLE)
+message PointerSearchResponse {
+	bytes	response	=  1;
+}
+
+// publish a container with id and bytes
+message ContainerPublishRequest {
+	string	id			=  1;
+	bytes	data		=  2;
+}
+
+// success/failure indicator for container publish
+message ContainerPublishResponse {
+	string	location	=  1;
+}
+
+message ContainerSearchRequest {
+	string	id			=  1;
+}
+
+message ContainerSearchResponse {
+	string	location	=  1;
+}
+
+message ContainerFetchRequest {
+	string	location	=  1;
+}
+
+// fetch of a container by its location
+message ContainerFetchResponse {
+	bytes	data		=  1;
+}
+
+message Failure {
+	string	cause		=  1;
+}
