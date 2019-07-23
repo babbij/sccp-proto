@@ -5,7 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<groupId>org.goodforgoodbusiness</groupId>
+		<groupId>com.colabriq</groupId>
 		<artifactId>sccp</artifactId>
 		<version>0.2-SNAPSHOT</version>
 		<relativePath>../../pom.xml</relativePath>
@@ -13,40 +13,43 @@
 
 	<artifactId>proto</artifactId>
 	<packaging>jar</packaging>
-	<name>SCCP Proto</name>
-	<version>0.2-SNAPSHOT</version>
+	<name>SCCP Protobuf Proto</name>
 
 	<dependencies>
 		<dependency>
 			<groupId>com.google.protobuf</groupId>
 			<artifactId>protobuf-java</artifactId>
-			<version>3.8.0</version>
+			<version>${protobuf.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>com.google.protobuf</groupId>
 			<artifactId>protoc</artifactId>
-			<version>3.8.0</version>
+			<version>${protobuf.version}</version>
 			<type>pom</type>
 		</dependency>
 	</dependencies>
 
 	<build>
-		<finalName>${project.artifactId}-${project.version}</finalName>
+		<finalName>${artifactId}-${version}</finalName>
 		<directory>target</directory>
 		<outputDirectory>target/classes</outputDirectory>
 		<testOutputDirectory>target/test-classes</testOutputDirectory>
 		<sourceDirectory>src/main/java</sourceDirectory>
 		<testSourceDirectory>src/test/java</testSourceDirectory>
+		
 		<resources>
 			<resource>
 				<directory>src/main/resources</directory>
 			</resource>
-			<resource>
-				<directory>lib</directory>
-			</resource>
 		</resources>
-
+		
+		<testResources>
+			<testResource>
+				<directory>src/test/resources</directory>
+			</testResource>
+		</testResources>
+		
 		<extensions>
         	<!-- provides os.detected.classifier (i.e. linux-x86_64, osx-x86_64) property -->
         	<extension>
@@ -55,21 +58,18 @@
 	            <version>1.4.1.Final</version>
         	</extension>
     	</extensions>
-
+		
 		<plugins>
 			<plugin>
-				<artifactId>maven-jar-plugin</artifactId>
-				<configuration>
-					<archive>
-						<manifest>
-							<addClasspath>true</addClasspath>
-							<classpathPrefix>lib/</classpathPrefix>
-							<mainClass>com.goodforgoodbusiness.engine.EngineModule</mainClass>
-						</manifest>
-					</archive>
-				</configuration>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
 			</plugin>
-
+			
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-eclipse-plugin</artifactId>
+			</plugin>
+			
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-dependency-plugin</artifactId>
@@ -86,7 +86,7 @@
 								<artifactItem>
 									<groupId>com.google.protobuf</groupId>
 									<artifactId>protoc</artifactId>
-									<version>3.9.0</version>
+									<version>${protobuf.version}</version>
 									<classifier>${os.detected.classifier}</classifier>
 									<type>exe</type>
 									<overWrite>true</overWrite>
@@ -97,29 +97,6 @@
 						</configuration>
 					</execution>
 				</executions>
-			</plugin>
-
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.3</version>
-				<configuration>
-					<source>${jdk.version}</source>
-					<target>${jdk.version}</target>
-					<encoding>${project.build.sourceEncoding}</encoding>
-				</configuration>
-			</plugin>
-
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-eclipse-plugin</artifactId>
-				<version>2.9</version>
-				<configuration>
-					<buildOutputDirectory>${project.build.directory}/classes</buildOutputDirectory>
-					<downloadSources>true</downloadSources>
-					<downloadJavadocs>false</downloadJavadocs>
-					<useProjectReferences>false</useProjectReferences>
-				</configuration>
 			</plugin>
 		</plugins>
 	</build>
