@@ -4,7 +4,7 @@ import "google/protobuf/any.proto";
 
 package DHT;
 
-option java_package = "com.goodforgoodbusiness.proto";
+option java_package = "com.colabriq.proto";
 option java_outer_classname = "DHTProto";
 
 // publish a pointer
