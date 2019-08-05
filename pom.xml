@@ -13,7 +13,7 @@
 
 	<artifactId>proto</artifactId>
 	<packaging>jar</packaging>
-	<name>SCCP Protobuf Proto</name>
+	<name>SCCP Protobuf Protocol</name>
 
 	<dependencies>
 		<dependency>
